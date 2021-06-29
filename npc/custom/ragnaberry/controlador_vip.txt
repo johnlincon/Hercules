@@ -1,0 +1,382 @@
+//  ___________________________________________________________________________________
+// /                                                                                   \
+// |                            __  __ _____ _      _____                              |
+// |                           |  \/  |_   _| |    |  __ \                             |
+// |                           | \  / | | | | |    | |  | |                            |
+// |                           | |\/| | | | | |    | |  | |                            |
+// |                           | |  | |_| |_| |____| |__| |                            |
+// |                           |_|  |_|_____|______|_____/                             |
+// |                                                                                   |
+// | --------------------------------------------------------------------------------- |
+// | Name: VIP System ( CONTROL )                                                      |
+// | --------------------------------------------------------------------------------- |
+// | Author: mild                                                                      |
+// | --------------------------------------------------------------------------------- |
+// | Description: VIP System ( CONTROL ),                                              |
+// |              add VIP, remove VIP, Add new staff member and other.                 |
+// | --------------------------------------------------------------------------------- |
+// | Changelog:                                                                        |
+// | 1.0 Started                              [mild]                                   |
+// | 1.1 Added "See members banished"         [mild]                                   |
+// | 1.2 Added "See VIP members"              [mild]                                   |
+// | 1.3 Traduzido                            [Linc@ragnaberry]                        |
+// \__________________________________________________________________________________/
+prontera, 155, 172, 4	script	VIP System#script	4_M_MANAGER,{
+
+	// Script's configurations
+	
+		// Script's name
+		set $nScript$, "[ VIP System ]";
+
+	// VIP's configurations
+	
+		// Sale of VIP, 30 days.
+		set @dVip1, 30;
+		
+		// Sale of VIP, 15 days.
+		set @dVip2, 15;
+		
+		// Sale of VIP, 5 days.
+		set @dVip3, 5;
+		
+		// Purchase price of the VIP of 30 days.
+		set @pVip1, 20;
+
+		// Purchase price of the VIP of 15 days.
+		set @pVip2, 10;
+
+		// Purchase price of the VIP of 5 days.
+		set @pVip3, 5;
+
+	if ( getgroupid() < 1 )
+	{
+		mes $nScript$;
+		mes "Você não é VIP, deseja adquirir?";
+		if (select ("- Sim:- Não") == 1)
+		{
+			switch ( select ("- "+@dVip1+" days for ^FF0000"+@pVip1+"^000000 cash.:- "+@dVip2+" days for ^FF0000"+@pVip2+"^000000 cash.:- "+@dVip3+" days for ^FF0000"+@pVip3+"^000000 cash.:- Nothing.") )
+			{
+			case 1:
+				if (#CASHPOINTS >= @pVip1)
+				{
+					mes $nScript$;
+					mes "Your VIP will be activated.";
+					close2;
+					query_sql ("UPDATE `login` SET `group_id`='1',`dayVip`=`dayVip`+"+@dVip1+" WHERE `account_id`='"+ getcharid(3) +"'");
+					set #CASHPOINTS,#CASHPOINTS-@pVip1;
+					atcommand "@kick " + strcharinfo(0);
+					end;
+				}
+				next;
+				mes $nScript$;
+				mes "You do not have ^FF0000"+@pVip1+"^000000 Cash.";
+				close;
+			case 2:
+				if (#CASHPOINTS >= @pVip2)
+				{
+					mes $nScript$;
+					mes "Your VIP will be activated.";
+					close2;
+					query_sql ("UPDATE `login` SET `level`='1',`dayVip`=`dayVip`+"+@dVip2+" WHERE `account_id`='"+ getcharid(3) +"'");
+					set #CASHPOINTS,#CASHPOINTS-@pVip2;
+					atcommand "@kick " + strcharinfo(0);
+					end;
+				}
+				next;
+				mes $nScript$;
+				mes "You do not have ^FF0000"+@pVip2+"^000000 Cash.";
+				close;
+			case 3:
+				if (#CASHPOINTS >= @pVip3)
+				{
+					mes $nScript$;
+					mes "Your VIP will be activated.";
+					close2;
+					query_sql ("UPDATE `login` SET `level`='1',`dayVip`=`dayVip`+"+@dVip3+" WHERE `account_id`='"+ getcharid(3) +"'");
+					set #CASHPOINTS,#CASHPOINTS-@pVip3;
+					atcommand "@kick " + strcharinfo(0);
+					end;
+				}
+				next;
+				mes $nScript$;
+				mes "You do not have ^FF0000"+@pVip3+"^000000 Cash.";
+				close;
+			case 4:
+				mes $nScript$;
+				mes "okay, see you soon.";
+				close;
+			}
+		}
+		next;
+		mes $nScript$;
+		mes "Okay, see you soon.";
+		close;
+	} else if (getgroupid() == 1) {
+		query_sql ("SELECT `dayVip` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'", @dayVip);
+		mes $nScript$;
+		mes "Hello "+strcharinfo(0);
+		mes "You have ^FF0000"+@dayVip+"^000000 days of VIP";
+		close;
+
+	} else if ( getgroupid() == 99 ) {
+		mes $nScript$;
+		mes "Hello "+strcharinfo(0)+".";
+		mes "What do you want to do?";
+		switch ( select ( "- Add VIP.:- Add staff.:- Remove VIP.:- See VIP members:- Banish member.:- See members banished.: -Nothing." ) )
+		{
+		case 1:
+			next;
+			mes $nScript$;
+			mes "Type login of the account that wishes to add days VIP";
+			input .@lAccount$;
+			query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='"+.@lAccount$+"'",.@ExisAccount);
+			if ( .@ExisAccount == 0 )
+			{
+				next;
+				mes $nScript$;
+				mes "You did not type login correct.";
+				close;
+			}
+			next;
+			mes $nScript$;
+			mes "Now type the days' quantity that you wishes to add. "+.@lAccount$+".";
+			input .@ammouVip;
+			if ( .@ammouVip == 0 )
+			{
+				next;
+				mes $nScript$;
+				mes "You typed a invalid quantity.";
+				close;
+			}
+			next;
+			mes $nScript$;
+			mes "Okay, i'm going to add the VIP";
+			next;
+			mes $nScript$;
+			mes "Ready, I added the VIP in the account ^FF0000"+.@lAccount$+"^000000 - Quantity ^FF0000"+.@ammouVip+"^000000.";
+			query_sql ("UPDATE `login` SET `group_id`='1',`dayVip`=`dayVip`+"+.@ammouVip+" WHERE `userid`='"+.@lAccount$+"'");
+			close;
+		case 2:
+			next;
+			mes $nScript$;
+			mes "Choice the position that you want to add in the account.";
+			switch ( select ("- Administrator ^CD0000(99)^000000 :- Game Master ^CD0000(60)^000000 :- Game Helper ^CD0000(40)^000000 :- Other :- Nothing") )
+			{
+				case 1:
+					next;
+					mes $nScript$;
+					mes "Type the login account.";
+					input .@lAccoGM$;
+					query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='"+.@lAccoGM$+"'",.@NoGM);
+					if ( .@NoGM == 0 )
+					{
+						next;
+						mes $nScript$;
+						mes "The account does not exist.";
+						close;
+					}
+					mes $nScript$;
+					mes "I'm going to add the position in the account.";
+					query_sql ("UPDATE `login` SET `group_id`='99' WHERE `userid`='"+.@lAccoGM$+"'");
+					next;
+					mes $nScript$;
+					mes "Ready, I added.";
+					close;
+				case 2:
+					next;
+					mes $nScript$;
+					mes "Type the login account.";
+					input .@lAccoGM$;
+					query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='"+.@lAccoGM$+"'",.@NoGM);
+					if ( .@NoGM == 0 )
+					{
+						next;
+						mes $nScript$;
+						mes "The account does not exist.";
+						close;
+					}
+					mes $nScript$;
+					mes "I'm going to add the position in the account.";
+					query_sql ("UPDATE `login` SET `group_id`='60' WHERE `userid`='"+.@lAccoGM$+"'");
+					next;
+					mes $nScript$;
+					mes "Ready, I added.";
+					close;
+				case 3:
+					next;
+					mes $nScript$;
+					mes "Type the login account.";
+					input .@lAccoGM$;
+					query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='"+.@lAccoGM$+"'",.@NoGM);
+					if ( .@NoGM == 0 )
+					{
+						next;
+						mes $nScript$;
+						mes "The account does not exist.";
+						close;
+					}
+					mes $nScript$;
+					mes "I'm going to add the position in the account.";
+					query_sql ("UPDATE `login` SET `group_id`='40' WHERE `userid`='"+.@lAccoGM$+"'");
+					next;
+					mes $nScript$;
+					mes "Ready, I added.";
+					close;
+				case 4:
+					next;
+					mes $nScript$;
+					mes "Type the login account.";
+					input .@lAccoGM$;
+					query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='"+.@lAccoGM$+"'",.@NoGM);
+					if ( .@NoGM == 0 )
+					{
+						next;
+						mes $nScript$;
+						mes "The account does not exist.";
+						close;
+					}
+					mes $nScript$;
+					mes "Now, adds the position that wishes.";
+					input .@lGroup;
+					next;
+					mes $nScript$;
+					mes "I'm going to add the position in the account.";
+					query_sql ("UPDATE `login` SET `group_id`='"+.@lGroup+"' WHERE `userid`='"+.@lAccoGM$+"'");
+					next;
+					mes $nScript$;
+					mes "Ready, I added.";
+					close;
+				case 5:
+					next;
+					mes $nScript$;
+					mes "Okay, goodbye";
+					close;
+			}
+		case 3:
+			next;
+			mes $nScript$;
+			mes "It wishes to remove VIP of some account?";
+			if ( select ("- Yes.:- No,") == 1 )
+			{
+				input @AccountBan$;
+				query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='"+@AccountBan$+"'",.@NoExist);
+				if (!.@NoExist)
+				{
+					next;
+					mes $nScript$;
+					mes "The account does not exist.";
+					close;
+				}
+				next;
+				mes $nScript$;
+				mes "Type the amount of days that wishes to remove.";
+				next;
+				input .@QAccountBan;
+				mes $nScript$;
+				mes "I'm going to remove. "+.@QAccountBan+" - Account: "+@AccountBan$+".";
+				next;
+				mes $nScript$;
+				mes "Are you sure?";
+				if ( select ("- Yes:- No") == 1 )
+				{
+					next;
+					mes $nScript$;
+					mes "Okay, i'm going to remove the VIP.";
+					close2;
+					query_sql ("UPDATE `login` SET `level`='1',`dayVip`=`dayVip`-"+.@QAccount+" WHERE `userid`='"+@AccountBan$+"'");
+					end;
+				}
+				next;
+				mes $nScript$;
+				mes "Okay, goodbye.";
+				close;
+			}
+			next;
+			mes $nScript$;
+			mes "Okay, goodbye.";
+			close;
+		case 4:
+			next;
+			query_sql("SELECT `userid` FROM `login` WHERE `group_id`=1",@nVIPs$); 
+			for(set @v, 0; @v < getarraysize(@nVIPs$); set @v, @v+1)
+			{
+				mes @v+" - "+ @nVIPs$[@v];
+			}
+			close;
+		case 5:
+			next;
+			mes $nScript$;
+			mes "Wish you banish someone?";
+			if ( select ("- Yes.:- No.") == 1 )
+			{
+				next;
+				mes $nScript$;
+				mes "Type the login account.";
+				next;
+				input @banM$;
+				query_sql ("SELECT `account_id` FROM `login` WHERE `userid`='"+@banM$+"'",.@NoExis);
+				if ( !.@NoExis )
+				{
+					next;
+					mes $nScript$;
+					mes "The account does not exist.";
+					close;
+				}
+				next;
+				mes $nScript$;
+				mes "Are you sure that you want to banish "+@banM$+"?";
+				if ( select ("- Yes:- No") == 1 )
+				{
+					close2;
+					atcommand "@kick " + @banM$;
+					query_sql ("UPDATE `login` SET `state`='5' WHERE `userid`='"+@banM$+"'");
+					end;
+				}
+				next;
+				mes $nScript$;
+				mes "Okay, goodbye.";
+				close;
+			}
+			next;
+			mes $nScript$;
+			mes "Okay, goodbye.";
+			close;
+		case 6:
+			next;
+			query_sql("SELECT `userid` FROM `login` WHERE `state`>=5",@nBan$); 
+			for(set @a, 0; @a < getarraysize(@nBan$); set @a, @a+1)
+			{
+				mes @a+" - "+ @nBan$[@a];
+			}
+			close;
+		case 7:
+			next;
+			mes $nScript$;
+			mes "Okay, goodbye.";
+			close;
+		}
+	}
+}
+-	script	SysVip#clock	-1,{
+
+OnClock0001:
+	query_sql ("UPDATE `login` SET `dayVip`=`dayVip`-1 WHERE `group_id`='1'");
+	end;
+OnClock0002:
+	query_sql ("UPDATE `login` SET `group_id`='0' WHERE `dayVip`<='0' AND `group_id`='1'");
+	end;
+}
+-	script	SysVip#onlogin	-1,{
+
+OnPCLoginEvent:
+	query_sql ("SELECT `dayVip` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'", .@ReSVIP);
+	if(getgroupid() < 1)
+	{
+		dispbottom "You do not a VIP";
+		end;
+	} else if (getgroupid() == 1) {
+		dispbottom "Hello "+strcharinfo(0)+" You have "+.@ReSVIP+" days VIP.";
+		end;
+	} else
+		end;
+}

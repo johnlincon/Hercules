@@ -1754,19 +1754,19 @@ static int battle_calc_skillratio(int attack_type, struct block_list *src, struc
 				 * Summoner
 				 **/
 				case SU_BITE:
-					skillratio += 100;
+					skillratio += 75;
 					break;
 				case SU_SCRATCH:
-					skillratio += -50 + 50 * skill_lv;
+					skillratio += -50 + 25 * skill_lv;
 					break;
 				case SU_SCAROFTAROU:
-					skillratio += -100 + 100 * skill_lv;
+					skillratio += -100 + 50 * skill_lv;
 					break;
 				case SU_PICKYPECK:
 				case SU_PICKYPECK_DOUBLE_ATK:
-					skillratio += 100 + 100 * skill_lv;
+					skillratio += 50 + 50 * skill_lv;
 					if ((status_get_max_hp(target) / 100) <= 50)
-						skillratio *= 2;
+						skillratio *= 1.25;
 					break;
 				case SU_LUNATICCARROTBEAT:
 					skillratio += 100 + 100 * skill_lv;
@@ -1993,10 +1993,10 @@ static int battle_calc_skillratio(int attack_type, struct block_list *src, struc
 					}
 					break;
 				case SU_SV_STEMSPEAR:
-					skillratio += 600;
+					skillratio += 300;
 					break;
 				case SU_CN_METEOR:
-					skillratio += 100 + 100 * skill_lv;
+					skillratio += 50 + 50 * skill_lv;
 					break;
 				default:
 					battle->calc_skillratio_magic_unknown(&attack_type, src, target, &skill_id, &skill_lv, &skillratio, &flag);
@@ -3882,7 +3882,7 @@ static struct Damage battle_calc_magic_attack(struct block_list *src, struct blo
 			 * Summoner
 			 */
 			case SU_SV_ROOTTWIST_ATK:
-				ad.damage = 100;
+				ad.damage = 50;
 				break;
 			default: {
 				unsigned int skillratio = 100; //Skill dmg modifiers.

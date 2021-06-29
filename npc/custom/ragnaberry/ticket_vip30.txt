@@ -1,0 +1,4 @@
+function	script	ticket30	{
+
+query_sql ("UPDATE `login` SET `group_id`='1',`dayVip`=`dayVip`+"+30+" WHERE `account_id`='"+ getcharid(3) +"'");
+}
