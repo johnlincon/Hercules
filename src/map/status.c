@@ -1880,7 +1880,7 @@ static int status_calc_pc_(struct map_session_data *sd, enum e_status_calc_opt o
 	if((skill_lv = pc->checkskill(sd,RA_RESEARCHTRAP))>0)
 		bstatus->int_ += skill_lv;
 	if ((pc->checkskill(sd,SU_POWEROFLAND)) > 0)
-		bstatus->int_ += 10;
+		bstatus->int_ += 20;
 
 	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
 	i = bstatus->str + sd->status.str + sd->param_bonus[0] + sd->param_equip[0];
@@ -1922,7 +1922,7 @@ static int status_calc_pc_(struct map_session_data *sd, enum e_status_calc_opt o
 		bstatus->max_hp += skill_lv*200;
 
 	if ((pc->checkskill(sd,SU_SPRITEMABLE)) > 0)
-		bstatus->max_hp += 500;
+		bstatus->max_hp += 1000;
 
 	// Apply relative modifiers from equipment
 	if(sd->hprate < 0)
@@ -1957,7 +1957,7 @@ static int status_calc_pc_(struct map_session_data *sd, enum e_status_calc_opt o
 	if( (skill_lv = pc->checkskill(sd,WM_LESSON)) > 0 )
 		bstatus->max_sp += 30 * skill_lv;
 	if ((pc->checkskill(sd,SU_SPRITEMABLE)) > 0)
-		bstatus->max_sp += 50;
+		bstatus->max_sp += 100;
 
 	// Apply relative modifiers from equipment
 	if(sd->sprate < 0)
@@ -2015,7 +2015,7 @@ static int status_calc_pc_(struct map_session_data *sd, enum e_status_calc_opt o
 	if(sd->critical_rate != 100)
 		bstatus->cri = bstatus->cri * sd->critical_rate/100;
 	if (pc->checkskill(sd, SU_POWEROFLIFE) > 0)
-		bstatus->cri += 10;
+		bstatus->cri += 20;
 
 	if(sd->flee2_rate < 0)
 		sd->flee2_rate = 0;
@@ -2049,7 +2049,7 @@ static int status_calc_pc_(struct map_session_data *sd, enum e_status_calc_opt o
 	if ((sd->weapontype == W_MACE || sd->weapontype == W_2HMACE) && (skill_lv = pc->checkskill(sd,NC_TRAININGAXE)) > 0)
 		bstatus->hit += 2*skill_lv;
 	if (pc->checkskill(sd, SU_POWEROFLIFE) > 0)
-		bstatus->hit += 10;
+		bstatus->hit += 20;
 
 	// ----- FLEE CALCULATION -----
 
@@ -2059,7 +2059,7 @@ static int status_calc_pc_(struct map_session_data *sd, enum e_status_calc_opt o
 	if((skill_lv=pc->checkskill(sd,MO_DODGE))>0)
 		bstatus->flee += (skill_lv*3)>>1;
 	if (pc->checkskill(sd, SU_POWEROFLIFE) > 0)
-		bstatus->flee += 10;
+		bstatus->flee += 20;
 	// ----- EQUIPMENT-DEF CALCULATION -----
 
 	// Apply relative modifiers from equipment
@@ -9200,13 +9200,13 @@ static int status_change_start_sub(struct block_list *src, struct block_list *bl
 					val4 = 0;
 				break;
 			case SC_ARCLOUSEDASH:
-				val2 = 5 + 2 * val1; // AGI
-				//val3 = 25; // Move speed increase
-				//if (sd != NULL && (sd->job & MAPID_BASEMASK) == MAPID_SUMMONER)
-					//val4 = 10; // Ranged ATK increase
+				val2 = 15 + 5 * val1; // AGI
+				val3 = 25; // Move speed increase
+				if (sd != NULL && (sd->job & MAPID_BASEMASK) == MAPID_SUMMONER)
+					val4 = 10; // Ranged ATK increase
 				break;
 			case SC_TUNAPARTY:
-				val2 = (st->max_hp * (val1 * 5) / 100); // %Max HP to absorb
+				val2 = (st->max_hp * (val1 * 10) / 100); // %Max HP to absorb
 				break;
 			case SC_BITESCAR:
 				val2 = 2 * val1; // MHP% damage
@@ -9214,10 +9214,10 @@ static int status_change_start_sub(struct block_list *src, struct block_list *bl
 				tick_time = 1000;
 				break;
 			case SC_SHRIMP:
-				val2 = 5; // BATK%, MATK%
+				val2 = 10; // BATK%, MATK%
 				break;
 			case SC_CATNIPPOWDER:
-				val2 = 25; // WATK%, MATK%
+				val2 = 50; // WATK%, MATK%
 				val3 = 25 * val1; // Move speed reduction
 				break;
 			case SC_WATER_SCREEN_OPTION:

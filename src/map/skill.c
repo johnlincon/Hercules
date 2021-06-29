@@ -1176,7 +1176,7 @@ static int skill_calc_heal(struct block_list *src, struct block_list *target, ui
 
 	switch (skill_id) {
 		case SU_TUNABELLY:
-			hp = status_get_max_hp(target) * ((10 * skill_lv) - 5) / 100;
+			hp = status_get_max_hp(target) * ((20 * skill_lv) - 10) / 100;
 			break;
 		case BA_APPLEIDUN:
 #ifdef RENEWAL
@@ -1212,7 +1212,7 @@ static int skill_calc_heal(struct block_list *src, struct block_list *target, ui
 			if (sd != NULL && ((skill2_lv = pc->checkskill(sd, SU_POWEROFSEA)) > 0)) {
 				hp += hp * 10 / 100;
 				if (pc->checkskill(sd, SU_TUNABELLY) == 5 && pc->checkskill(sd, SU_TUNAPARTY) == 5 && pc->checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc->checkskill(sd, SU_FRESHSHRIMP) == 5)
-					hp += hp * 7 / 100;
+					hp += hp * 20 / 100;
 			}
 			break;
 	}
@@ -2289,7 +2289,7 @@ static int skill_additional_effect(struct block_list *src, struct block_list *bl
 			sc_start2(src, bl, SC_BLOODING, (skill_lv * 3), skill_lv, src->id, skill->get_time(skill_id, skill_lv)); // TODO: What's the chance/time?
 			break;
 		case SU_SV_STEMSPEAR:
-			sc_start2(src, bl, SC_BLOODING, 7, skill_lv, src->id, skill->get_time(skill_id, skill_lv));
+			sc_start2(src, bl, SC_BLOODING, 10, skill_lv, src->id, skill->get_time(skill_id, skill_lv));
 			break;
 		case SU_CN_METEOR:
 			sc_start(src, bl, SC_CURSE, 10, skill_lv, skill->get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?

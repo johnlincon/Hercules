@@ -1,4 +1,0 @@
-function	script	ticket7	{
-
-query_sql ("UPDATE `login` SET `group_id`='1',`dayVip`=`dayVip`+"+7+" WHERE `account_id`='"+ getcharid(3) +"'");
-}
