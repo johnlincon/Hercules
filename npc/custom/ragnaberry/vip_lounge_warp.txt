@@ -1,0 +1,29 @@
+//===== eAthena Script =======================================
+//= VIP Lounge Warps
+//===== By: ==================================================
+//= Syouji
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= N/A
+//===== Description: =========================================
+//= Warp Points for VIP lounge Map
+//===== Additional Comments: =================================
+//= N/A
+//============================================================
+
+//Gardens to Indoors
+vip_lounge,144,220,0	warp	vip_w1-1	1,1,vip_lounge,151,118
+vip_lounge,151,115,0	warp	vip_w1-2	1,1,vip_lounge,144,223
+
+//Indoors to Room-1
+vip_lounge,135,129,0	warp	vip_w2-1	1,1,vip_lounge,89,129
+vip_lounge,92,129,0	warp	vip_w2-2	1,1,vip_lounge,137,129
+
+//Indoors to Room-2
+vip_lounge,151,140,0	warp	vip_w3-1	1,1,vip_lounge,153,68
+vip_lounge,153,72,0	warp	vip_w3-2	1,1,vip_lounge,151,137
+
+//Indoors to Room-3
+vip_lounge,168,129,0	warp	vip_w4-1	1,1,vip_lounge,196,130
+vip_lounge,193,130,0	warp	vip_w4-2	1,1,vip_lounge,166,129

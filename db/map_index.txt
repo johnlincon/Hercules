@@ -1177,9 +1177,7 @@ que_thr
 //test
 
 //======================================================================================
-//Place your custom maps with a starting ID here.
+//Mapas adicionais do Ragnaberry.
 //======================================================================================
-//Example:
-//
-//mymap	1250
-//mymap-2
+vip_lounge
+

@@ -96,3 +96,12 @@ bat_a02	mapflag	nowarp
 // Poring War ==================
 poring_w01	mapflag	nowarp
 poring_w02	mapflag	nowarp
+
+// Ragnaberry  ==================
+sec_pri	mapflag	nowarp
+dicastes01	mapflag	nowarp
+mora	mapflag	nowarp
+dewata	mapflag	nowarp
+malangdo	mapflag	nowarp
+malaya	mapflag	nowarp
+eclage	mapflag	nowarp

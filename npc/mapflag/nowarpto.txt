@@ -159,3 +159,12 @@ bossnia_01	mapflag	nowarpto
 bossnia_02	mapflag	nowarpto
 bossnia_03	mapflag	nowarpto
 bossnia_04	mapflag	nowarpto
+
+// Ragnaberry ==============
+sec_pri	mapflag	nowarpto
+dicastes01	mapflag	nowarpto
+mora	mapflag	nowarpto
+dewata	mapflag	nowarpto
+malangdo	mapflag	nowarpto
+malaya	mapflag	nowarpto
+eclage	mapflag	nowarpto

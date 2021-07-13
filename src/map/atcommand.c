@@ -1977,6 +1977,7 @@ ACMD(go)
 		{ MAP_MALANGDO,    140, 114, 5 }, // 33 = Malangdo Island
 		{ MAP_MALAYA,      242, 211, 5 }, // 34 = Malaya Port
 		{ MAP_ECLAGE,      110,  39, 3 }, // 35 = Eclage
+		{ MAP_VIP_LOUNGE,      144,  230, 3 }, // 36 = Sala Vip
 	};
 
 	memset(map_name, '\0', sizeof(map_name));
